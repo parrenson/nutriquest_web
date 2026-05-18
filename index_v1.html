@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NutriQuest · Descarga la app</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --green: #1a6b0a;
+    --green-dark: #042901;
+    --green-soft: rgba(26, 107, 10, 0.12);
+    --green-line: rgba(26, 107, 10, 0.22);
+    --cream: #f5f5f0;
+    --cream-2: #ecece4;
+    --white: #ffffff;
+    --orange: #e8731c;
+    --orange-dark: #b8530e;
+    --orange-soft: rgba(232, 115, 28, 0.12);
+    --orange-line: rgba(232, 115, 28, 0.28);
+    --ink: #1a1a17;
+    --ink-soft: #5a5a52;
+    --radius-lg: 24px;
+    --radius-md: 14px;
+    --shadow-sm: 0 1px 2px rgba(4, 41, 1, 0.04), 0 4px 16px rgba(4, 41, 1, 0.04);
+    --shadow-md: 0 2px 6px rgba(4, 41, 1, 0.06), 0 18px 40px -12px rgba(4, 41, 1, 0.14);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Background flourish ---------- */
+  .bg-blob {
+    position: fixed;
+    inset: -10% -10% auto auto;
+    width: 60vw;
+    height: 60vw;
+    max-width: 720px;
+    max-height: 720px;
+    background: radial-gradient(circle at 30% 30%, rgba(26, 107, 10, 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-blob.two {
+    inset: auto auto -20% -20%;
+    background: radial-gradient(circle at 60% 60%, rgba(232, 115, 28, 0.08), transparent 65%);
+  }
+
+  /* ---------- Layout ---------- */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 22px 80px;
+  }
+
+  /* ---------- Header ---------- */
+  header.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    color: var(--green-dark);
+  }
+  .brand .leaf {
+    width: 36px; height: 36px;
+    display: inline-grid; place-items: center;
+    background: var(--white);
+    border: 1px solid var(--green-line);
+    border-radius: 12px;
+    font-size: 19px;
+  }
+  .nav-meta {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .nav-meta .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2fb83a;
+    box-shadow: 0 0 0 4px rgba(47, 184, 58, 0.18);
+  }
+  @media (max-width: 540px) {
+    .nav-meta span.label { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 56px;
+  }
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; gap: 24px; }
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    color: var(--green);
+    background: var(--green-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .eyebrow::before {
+    content: ""; display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+  }
+  h1 {
+    font-size: clamp(40px, 6.4vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    margin: 0 0 18px;
+    color: var(--green-dark);
+    text-wrap: balance;
+  }
+  h1 .accent {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--green);
+  }
+  .lead {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin: 0 0 24px;
+    text-wrap: pretty;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 18px 28px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .hero-meta .item {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-meta .check {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--green-dark); color: var(--cream);
+    display: inline-grid; place-items: center;
+    font-size: 11px; font-weight: 700;
+  }
+
+  /* Hero visual: stylized phone */
+  .hero-visual {
+    position: relative;
+    min-height: 320px;
+    display: grid;
+    place-items: end center;
+  }
+  .phone {
+    position: relative;
+    width: 240px;
+    height: 460px;
+    background: var(--green-dark);
+    border-radius: 38px;
+    padding: 10px;
+    box-shadow: var(--shadow-md);
+    transform: rotate(-6deg);
+  }
+  .phone .screen {
+    width: 100%; height: 100%;
+    border-radius: 28px;
+    background: linear-gradient(180deg, #0c3805 0%, #04240a 100%);
+    overflow: hidden;
+    position: relative;
+    color: var(--cream);
+    padding: 20px 18px;
+  }
+  .phone .notch {
+    position: absolute; top: 12px; left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+  }
+  .phone .p-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+    margin-top: 16px;
+  }
+  .phone .p-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-top: 6px;
+  }
+  .phone .p-card {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 14px;
+  }
+  .phone .p-card .row {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px; opacity: 0.85;
+  }
+  .phone .p-card .meal {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .phone .p-stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-top: 8px;
+  }
+  .phone .stat {
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 8px 6px;
+    text-align: center;
+    font-size: 10px;
+    opacity: 0.85;
+  }
+  .phone .stat b {
+    display: block; font-size: 14px; opacity: 1;
+    color: #b6e89a;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .phone .p-prog {
+    margin-top: 18px;
+    background: rgba(255,255,255,0.1);
+    height: 6px;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .phone .p-prog::after {
+    content: ""; display:block; width: 62%; height: 100%;
+    background: #b6e89a;
+    border-radius: 999px;
+  }
+  .phone .p-label {
+    font-size: 10px; opacity: 0.7;
+    margin-top: 6px;
+    font-family: "JetBrains Mono", monospace;
+  }
+  /* Floating AR badge */
+  .ar-chip {
+    position: absolute;
+    right: -10px; top: 60px;
+    transform: rotate(8deg);
+    background: var(--white);
+    border: 1px solid var(--orange-line);
+    border-radius: 14px;
+    padding: 10px 12px;
+    box-shadow: var(--shadow-sm);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .ar-chip .pill {
+    font-family: "JetBrains Mono", monospace;
+    background: var(--orange);
+    color: white;
+    font-size: 9px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 880px) {
+    .hero-visual { display: none; }
+  }
+
+  /* ---------- Download Cards ---------- */
+  .downloads {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    margin-bottom: 80px;
+  }
+  @media (max-width: 720px) {
+    .downloads { grid-template-columns: 1fr; }
+  }
+  .dl-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    position: relative;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s, border-color .25s;
+    border: 1.5px solid var(--green-line);
+    box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column;
+    min-height: 380px;
+  }
+  .dl-card.orange { border-color: var(--orange-line); }
+  .dl-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(26, 107, 10, 0.45);
+  }
+  .dl-card.orange:hover { border-color: rgba(232, 115, 28, 0.55); }
+
+  .dl-card .badge {
+    position: absolute; top: 18px; right: 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: var(--green-soft);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .dl-card.orange .badge { color: var(--orange-dark); background: var(--orange-soft); }
+
+  .dl-card .icon-box {
+    width: 76px; height: 76px;
+    border-radius: 20px;
+    background: var(--cream);
+    display: grid; place-items: center;
+    font-size: 38px;
+    margin-bottom: 22px;
+    border: 1px solid var(--green-line);
+  }
+  .dl-card.orange .icon-box { border-color: var(--orange-line); }
+
+  .dl-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    color: var(--green-dark);
+  }
+  .dl-card p.desc {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    text-wrap: pretty;
+  }
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 24px;
+  }
+  .chip {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--cream);
+    color: var(--ink-soft);
+    border: 1px solid rgba(0,0,0,0.06);
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.02em;
+  }
+
+  .dl-card .spacer { flex: 1; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease, background .2s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .btn-green {
+    background: var(--green-dark);
+    color: var(--cream);
+    box-shadow: 0 6px 14px -4px rgba(4, 41, 1, 0.35);
+  }
+  .btn-green:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px -6px rgba(4, 41, 1, 0.45);
+    background: #062e02;
+  }
+  .btn-orange {
+    background: var(--orange);
+    color: white;
+    box-shadow: 0 6px 14px -4px rgba(232, 115, 28, 0.45);
+  }
+  .btn-orange:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px -6px rgba(232, 115, 28, 0.55);
+    background: #d8651a;
+  }
+  .btn[disabled], .btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .meta-line {
+    margin-top: 12px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- Section heading ---------- */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; margin-bottom: 28px;
+    border-bottom: 1px solid rgba(4, 41, 1, 0.08);
+    padding-bottom: 14px;
+  }
+  .section-head h2 {
+    font-size: clamp(26px, 3.4vw, 36px);
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin: 0;
+  }
+  .section-head .index {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+  }
+
+  /* ---------- Install steps ---------- */
+  .install { margin-bottom: 72px; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+  .step {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    border: 1px solid rgba(4, 41, 1, 0.06);
+    position: relative;
+    transition: transform .25s ease;
+  }
+  .step:hover { transform: translateY(-2px); }
+  .step .num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .step .ico {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .step p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+  .step p b { color: var(--green-dark); font-weight: 600; }
+
+  /* ---------- Requisitos ---------- */
+  .requisitos {
+    background: var(--green-dark);
+    color: var(--cream);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    margin-bottom: 72px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 36px;
+    align-items: center;
+  }
+  @media (max-width: 720px) {
+    .requisitos { grid-template-columns: 1fr; padding: 28px; }
+  }
+  .requisitos h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    letter-spacing: -0.025em;
+    margin: 0 0 10px;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+  .requisitos p.sub {
+    margin: 0;
+    opacity: 0.7;
+    font-size: 14px;
+    max-width: 32ch;
+  }
+  .req-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 10px;
+  }
+  .req-list li {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    font-size: 15px;
+  }
+  .req-list .k {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    background: rgba(182, 232, 154, 0.18);
+    color: #c9efb1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.06em;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer.foot {
+    border-top: 1px solid rgba(4, 41, 1, 0.08);
+    padding-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  footer.foot .warn {
+    display: inline-flex; align-items: center; gap: 8px;
+    max-width: 68ch;
+  }
+  footer.foot .uao {
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.08em;
+    color: var(--green-dark);
+    font-weight: 600;
+  }
+
+  /* ---------- Toast ---------- */
+  .toast-wrap {
+    position: fixed;
+    left: 50%; bottom: 32px;
+    transform: translateX(-50%);
+    z-index: 100;
+    pointer-events: none;
+    display: flex; flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .toast {
+    background: var(--green-dark);
+    color: var(--cream);
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 18px 40px -10px rgba(4, 41, 1, 0.4);
+    display: inline-flex; align-items: center; gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .35s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+    pointer-events: auto;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast.orange { background: var(--orange-dark); }
+
+  /* ---------- Fade-in animation ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .7s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+</style>
+</head>
+<body>
+  <div class="bg-blob" aria-hidden="true"></div>
+  <div class="bg-blob two" aria-hidden="true"></div>
+
+  <div class="page">
+    <!-- ============== NAV ============== -->
+    <header class="nav reveal">
+      <div class="brand">
+        <span class="leaf" aria-hidden="true">🥗</span>
+        <span>NutriQuest</span>
+      </div>
+      <div class="nav-meta">
+        <span class="dot"></span>
+        <span class="label">build · v1.0 · UAO</span>
+      </div>
+    </header>
+
+    <!-- ============== HERO ============== -->
+    <section class="hero">
+      <div class="hero-text reveal">
+        <span class="eyebrow">Tu guía nutricional universitaria</span>
+        <h1>Come mejor entre <span class="accent">clases, parciales</span> y semana de cortes.</h1>
+        <p class="lead">Descarga la app y el juego AR para empezar. Pensada para estudiantes UAO — sugerencias rápidas, hábitos sostenibles, y un toque de realidad aumentada.</p>
+        <div class="hero-meta">
+          <span class="item"><span class="check">✓</span> Android 7+</span>
+          <span class="item"><span class="check">✓</span> Sin login</span>
+          <span class="item"><span class="check">✓</span> 100% gratis</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="p-eyebrow">Hoy · Almuerzo</div>
+            <div class="p-title">Bowl de quinoa & pollo</div>
+            <div class="p-card">
+              <div class="row"><span>Sugerido para ti</span><span>520 kcal</span></div>
+              <div class="meal">Balance ⚖ Verde</div>
+              <div class="p-stats">
+                <div class="stat">P<b>32g</b></div>
+                <div class="stat">C<b>48g</b></div>
+                <div class="stat">G<b>14g</b></div>
+              </div>
+            </div>
+            <div class="p-prog"></div>
+            <div class="p-label">racha · 12 días</div>
+          </div>
+        </div>
+        <div class="ar-chip">
+          <span class="pill">AR</span>
+          <span>Batido detectado 🥤</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== DOWNLOADS ============== -->
+    <section class="downloads">
+      <article class="dl-card reveal">
+        <span class="badge">⭐ Recomendado</span>
+        <div class="icon-box">📱</div>
+        <h3>NutriQuest</h3>
+        <p class="desc">Sugerencias alimentarias personalizadas, historial, progreso y más.</p>
+        <div class="chips">
+          <span class="chip">Modo oscuro</span>
+          <span class="chip">Swipe cards</span>
+          <span class="chip">Avatar</span>
+        </div>
+        <div class="spacer"></div>
+        <button class="btn btn-green disabled" disabled aria-disabled="true" data-app="main">
+          <span>⏳ Próximamente</span>
+        </button>
+        <div class="meta-line">apk · ~ pendiente</div>
+      </article>
+
+      <article class="dl-card orange reveal">
+        <span class="badge">🎯 Experiencia AR</span>
+        <div class="icon-box">🎮</div>
+        <h3>NutriQuest AR</h3>
+        <p class="desc">Experiencia de realidad aumentada para preparar batidos saludables.</p>
+        <div class="chips">
+          <span class="chip">AR Mobile</span>
+          <span class="chip">Unity</span>
+          <span class="chip">Interactivo</span>
+        </div>
+        <div class="spacer"></div>
+        <a class="btn btn-orange"
+           href="https://drive.google.com/uc?export=download&id=1FEIrg4BA9LjxC-fj2w5NhdVdngWEMLbC"
+           data-app="ar"
+           rel="noopener">
+          <span>⬇ Descargar Juego AR</span>
+        </a>
+        <div class="meta-line">apk · android · unity ar</div>
+      </article>
+    </section>
+
+    <!-- ============== INSTALL STEPS ============== -->
+    <section class="install reveal">
+      <div class="section-head">
+        <h2>Cómo instalar</h2>
+        <span class="index">01 / 03 — guía rápida</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">Paso 01</div>
+          <span class="ico">📥</span>
+          <p>Descarga ambos <b>APKs</b> en tu dispositivo Android.</p>
+        </div>
+        <div class="step">
+          <div class="num">Paso 02</div>
+          <span class="ico">⚙️</span>
+          <p>Activa <b>"Instalar apps desconocidas"</b> en Ajustes → Seguridad.</p>
+        </div>
+        <div class="step">
+          <div class="num">Paso 03</div>
+          <span class="ico">📲</span>
+          <p>Instala <b>NutriQuest AR</b> primero, luego <b>NutriQuest</b>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== REQUISITOS ============== -->
+    <section class="requisitos reveal">
+      <div>
+        <h2>Requisitos del dispositivo</h2>
+        <p class="sub">Lo mínimo que necesitas para una experiencia fluida — incluida la cámara para AR.</p>
+      </div>
+      <ul class="req-list">
+        <li>
+          <span>Android 7.0 o superior</span>
+          <span class="k">OS</span>
+        </li>
+        <li>
+          <span>Cámara trasera (para AR)</span>
+          <span class="k">HW</span>
+        </li>
+        <li>
+          <span>200 MB de espacio libre</span>
+          <span class="k">200 MB</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============== FOOTER ============== -->
+    <footer class="foot reveal">
+      <span class="warn">⚠️ Contenido educativo · No reemplaza consulta profesional.</span>
+      <span class="uao">UAO · 2026</span>
+    </footer>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+(() => {
+  // ---- Fade-in reveal ----
+  const items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    items.forEach((el, i) => {
+      el.style.transitionDelay = `${Math.min(i, 6) * 60}ms`;
+      io.observe(el);
+    });
+  } else {
+    items.forEach(el => el.classList.add('in'));
+  }
+
+  // ---- Toast ----
+  const wrap = document.getElementById('toastWrap');
+  function showToast(message, variant = 'green') {
+    const t = document.createElement('div');
+    t.className = 'toast' + (variant === 'orange' ? ' orange' : '');
+    t.textContent = message;
+    wrap.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 400);
+    }, 2800);
+  }
+
+  // ---- Download buttons ----
+  document.querySelectorAll('[data-app]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      if (btn.hasAttribute('disabled') || btn.classList.contains('disabled')) {
+        e.preventDefault();
+        return;
+      }
+      const variant = btn.classList.contains('btn-orange') ? 'orange' : 'green';
+      showToast('¡Descarga iniciada! 🎉', variant);
+    });
+  });
+})();
+</script>
+</body>
+</html>
