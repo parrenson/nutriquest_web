@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NutriQuest · Come mejor. Estudia mejor.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --green: #1a6b0a;
+    --green-dark: #042901;
+    --green-light: #c1d9b7;
+    --green-soft: rgba(26, 107, 10, 0.10);
+    --green-line: rgba(26, 107, 10, 0.22);
+    --cream: #f5f5f0;
+    --cream-2: #ecece4;
+    --white: #ffffff;
+    --orange: #e8731c;
+    --orange-dark: #b8530e;
+    --orange-soft: rgba(232, 115, 28, 0.14);
+    --orange-line: rgba(232, 115, 28, 0.35);
+    --ink: #1a1a17;
+    --ink-soft: #5a5a52;
+    --radius-lg: 24px;
+    --radius-md: 14px;
+    --shadow-sm: 0 1px 2px rgba(4, 41, 1, 0.04), 0 6px 22px rgba(4, 41, 1, 0.05);
+    --shadow-md: 0 2px 6px rgba(4, 41, 1, 0.06), 0 22px 50px -14px rgba(4, 41, 1, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+
+  /* ===================== NAVBAR ===================== */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 14px 0;
+    transition: background .35s ease, box-shadow .35s ease, transform .35s ease, padding .35s ease, border-color .35s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .navbar.visible {
+    background: rgba(245, 245, 240, 0.85);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom-color: rgba(4, 41, 1, 0.08);
+    box-shadow: 0 1px 0 rgba(4,41,1,0.02);
+  }
+  .nav-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    color: var(--green-dark);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .35s, transform .35s;
+  }
+  .navbar.visible .nav-brand { opacity: 1; transform: none; }
+  .nav-brand img { width: 26px; height: 26px; object-fit: contain; }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-dark);
+    color: var(--cream);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .35s, transform .35s, background .2s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .navbar.visible .nav-cta { opacity: 1; transform: none; }
+  .nav-cta:hover { background: #062e02; }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 120px 22px 80px;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(193, 217, 183, 0.16), transparent 70%),
+      linear-gradient(180deg, #042901 0%, #0a4404 55%, #1a6b0a 100%);
+    color: var(--cream);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Soft botanical background dots */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(193, 217, 183, 0.08) 1px, transparent 0);
+    background-size: 22px 22px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 100% 80% at 50% 50%, black 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 760px;
+  }
+  .hero-logo {
+    width: 116px;
+    height: 116px;
+    margin: 0 auto 28px;
+    filter: brightness(0) saturate(100%) invert(94%) sepia(8%) saturate(220%) hue-rotate(50deg) brightness(102%) contrast(96%);
+    /* makes logo render in cream/light green tone */
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: rgba(193, 217, 183, 0.18);
+    color: var(--green-light);
+    padding: 7px 14px;
+    border-radius: 999px;
+    margin-bottom: 26px;
+    border: 1px solid rgba(193, 217, 183, 0.22);
+  }
+  .hero-eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--green-light);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(193, 217, 183, 0.18);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(193, 217, 183, 0.16); }
+    50% { box-shadow: 0 0 0 8px rgba(193, 217, 183, 0.04); }
+  }
+  .hero h1 {
+    font-size: clamp(44px, 7vw, 88px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.0;
+    margin: 0 0 22px;
+    text-wrap: balance;
+  }
+  .hero h1 .accent {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--green-light);
+  }
+  .hero p.sub {
+    font-size: clamp(16px, 1.6vw, 20px);
+    color: rgba(245, 245, 240, 0.78);
+    max-width: 540px;
+    margin: 0 auto 38px;
+    text-wrap: pretty;
+  }
+  .hero-cta-row {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .hero .note {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(193, 217, 183, 0.7);
+    margin-top: 10px;
+  }
+  /* hero corner glow */
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(193, 217, 183, 0.18), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hero-glow.tl { top: -200px; left: -200px; }
+  .hero-glow.br { bottom: -260px; right: -200px; background: radial-gradient(circle, rgba(26, 107, 10, 0.4), transparent 60%); }
+
+  /* ===================== BUTTONS ===================== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 26px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s;
+    white-space: nowrap;
+  }
+  .btn-white {
+    background: var(--cream);
+    color: var(--green-dark);
+    box-shadow: 0 6px 18px -4px rgba(0,0,0,0.25);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -8px rgba(0,0,0,0.32); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1.5px solid rgba(245, 245, 240, 0.45);
+  }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(245, 245, 240, 0.85); background: rgba(245,245,240,0.06); }
+  .btn-green {
+    background: var(--green-dark);
+    color: var(--cream);
+    box-shadow: 0 6px 18px -4px rgba(4, 41, 1, 0.35);
+  }
+  .btn-green:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -8px rgba(4, 41, 1, 0.45); background: #062e02; }
+  .btn-orange {
+    background: var(--orange);
+    color: white;
+    box-shadow: 0 6px 18px -4px rgba(232, 115, 28, 0.45);
+  }
+  .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -8px rgba(232, 115, 28, 0.55); background: #d8651a; }
+  .btn[disabled], .btn.disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ===================== SECTION COMMONS ===================== */
+  .section {
+    padding: 96px 22px;
+  }
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--green);
+    background: var(--green-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .section-eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+  }
+  .section h2 {
+    font-size: clamp(34px, 5vw, 56px);
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    font-weight: 700;
+    margin: 0 0 16px;
+    color: var(--green-dark);
+    text-wrap: balance;
+  }
+  .section h2 .accent {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--green);
+  }
+  .section p.section-lead {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin: 0 0 56px;
+    text-wrap: pretty;
+  }
+  .section.center .section-eyebrow,
+  .section.center h2,
+  .section.center p.section-lead {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .section.center .section-eyebrow { display: inline-flex; }
+  .section.center .head-wrap { text-align: center; margin-bottom: 56px; }
+  .section.center .head-wrap p.section-lead { margin-bottom: 0; }
+
+  /* ===================== COMO FUNCIONA ===================== */
+  .features {
+    background: var(--cream);
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 880px) { .feature-grid { grid-template-columns: 1fr; } }
+  .feature {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    border: 1px solid rgba(4, 41, 1, 0.06);
+    box-shadow: var(--shadow-sm);
+    transition: transform .3s ease, box-shadow .3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .feature::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--green);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .4s ease;
+  }
+  .feature:hover::after { transform: scaleX(1); }
+  .feature .ico {
+    width: 64px; height: 64px;
+    background: var(--green-soft);
+    border-radius: 18px;
+    display: grid; place-items: center;
+    font-size: 32px;
+    margin-bottom: 22px;
+  }
+  .feature h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+    color: var(--green-dark);
+  }
+  .feature p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .feature .num {
+    position: absolute;
+    top: 22px; right: 24px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+  }
+
+  /* ===================== ROLES ===================== */
+  .roles { background: var(--white); }
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 880px) { .role-grid { grid-template-columns: 1fr; } }
+  .role {
+    padding: 30px;
+    background: var(--cream);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(4, 41, 1, 0.06);
+    transition: transform .3s ease, background .3s ease;
+    position: relative;
+  }
+  .role:hover { transform: translateY(-3px); background: #efefe8; }
+  .role .role-ico {
+    width: 56px; height: 56px;
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--green-line);
+    display: grid; place-items: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+  .role h3 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 8px;
+    color: var(--green-dark);
+  }
+  .role h3 .tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    background: var(--green-soft);
+    color: var(--green);
+    padding: 3px 7px;
+    border-radius: 4px;
+    margin-left: 8px;
+    letter-spacing: 0.08em;
+    vertical-align: middle;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .role p {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* ===================== DOWNLOAD ===================== */
+  .download {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(193, 217, 183, 0.1), transparent 70%),
+      linear-gradient(180deg, #042901 0%, #073c02 100%);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .download::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(193, 217, 183, 0.06) 1px, transparent 0);
+    background-size: 26px 26px;
+    pointer-events: none;
+  }
+  .download h2 { color: var(--cream); }
+  .download h2 .accent { color: var(--green-light); }
+  .download p.section-lead { color: rgba(245, 245, 240, 0.72); }
+  .download .section-eyebrow {
+    color: var(--green-light);
+    background: rgba(193, 217, 183, 0.14);
+  }
+  .download .section-eyebrow::before { background: var(--green-light); }
+
+  .download-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  @media (max-width: 880px) { .download-grid { grid-template-columns: 1fr; } }
+  .dl-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-lg);
+    padding: 34px;
+    position: relative;
+    display: flex; flex-direction: column;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform .3s ease, border-color .3s ease, background .3s ease;
+    min-height: 380px;
+  }
+  .dl-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .dl-card.orange { border-color: rgba(232, 115, 28, 0.5); }
+  .dl-card.orange:hover { border-color: rgba(232, 115, 28, 0.8); }
+
+  .dl-card .badge {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: var(--orange);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .dl-card .icon-box {
+    width: 72px; height: 72px;
+    border-radius: 20px;
+    background: rgba(193, 217, 183, 0.14);
+    border: 1px solid rgba(193, 217, 183, 0.24);
+    display: grid; place-items: center;
+    font-size: 36px;
+    margin-bottom: 24px;
+  }
+  .dl-card.orange .icon-box {
+    background: rgba(232, 115, 28, 0.14);
+    border-color: rgba(232, 115, 28, 0.34);
+  }
+  .dl-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 0 0 10px;
+    color: var(--cream);
+  }
+  .dl-card .desc {
+    font-size: 15px;
+    color: rgba(245, 245, 240, 0.7);
+    margin: 0 0 22px;
+    text-wrap: pretty;
+    max-width: 42ch;
+  }
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 26px;
+  }
+  .chip {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(193, 217, 183, 0.14);
+    color: var(--green-light);
+    border: 1px solid rgba(193, 217, 183, 0.2);
+    letter-spacing: 0.04em;
+  }
+  .chip.orange-chip {
+    background: rgba(232, 115, 28, 0.14);
+    color: #ffb27a;
+    border-color: rgba(232, 115, 28, 0.28);
+  }
+  .dl-card .spacer { flex: 1; }
+  .dl-card .meta-line {
+    margin-top: 12px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: rgba(245, 245, 240, 0.5);
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+
+  /* ===================== INSTALL ===================== */
+  .install { background: var(--cream); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 56px;
+  }
+  @media (max-width: 880px) { .steps { grid-template-columns: 1fr; } }
+  .step {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: 28px 26px;
+    border: 1px solid rgba(4, 41, 1, 0.06);
+    display: flex; gap: 18px;
+    align-items: flex-start;
+    transition: transform .25s ease;
+  }
+  .step:hover { transform: translateY(-2px); }
+  .step .circle {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--green-dark);
+    color: var(--cream);
+    display: grid; place-items: center;
+    font-weight: 700;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px;
+  }
+  .step .body {
+    flex: 1;
+  }
+  .step .body h4 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green-dark);
+    letter-spacing: -0.01em;
+  }
+  .step .body p {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+  .reqs-row {
+    display: flex; flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .req-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white);
+    border: 1px solid rgba(4, 41, 1, 0.08);
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--green-dark);
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.02em;
+  }
+  .req-chip .ico { font-size: 16px; }
+
+  /* ===================== FOOTER ===================== */
+  footer.foot {
+    background: var(--green-dark);
+    color: rgba(245, 245, 240, 0.7);
+    padding: 56px 22px 40px;
+    text-align: center;
+  }
+  footer.foot .foot-logo {
+    width: 64px; height: 64px;
+    margin: 0 auto 24px;
+    opacity: 0.9;
+    filter: brightness(0) saturate(100%) invert(94%) sepia(8%) saturate(220%) hue-rotate(50deg) brightness(102%) contrast(96%);
+  }
+  footer.foot .foot-brand {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    margin-bottom: 22px;
+  }
+  footer.foot .foot-warn {
+    font-size: 14px;
+    margin: 0 auto 10px;
+    max-width: 56ch;
+  }
+  footer.foot .foot-uao {
+    font-size: 12px;
+    opacity: 0.7;
+    margin: 0;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.08em;
+  }
+  footer.foot .divider {
+    width: 40px; height: 1px;
+    background: rgba(245, 245, 240, 0.2);
+    margin: 22px auto;
+  }
+
+  /* ===================== TOAST ===================== */
+  .toast-wrap {
+    position: fixed;
+    right: 24px; bottom: 24px;
+    z-index: 100;
+    pointer-events: none;
+    display: flex; flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  @media (max-width: 540px) {
+    .toast-wrap { left: 24px; right: 24px; align-items: stretch; }
+  }
+  .toast {
+    background: var(--green-dark);
+    color: var(--cream);
+    padding: 14px 22px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 18px 40px -10px rgba(4, 41, 1, 0.5);
+    display: inline-flex; align-items: center; gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .35s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+    pointer-events: auto;
+    border: 1px solid rgba(193, 217, 183, 0.18);
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast .pill {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+
+  /* ===================== REVEAL ===================== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand">
+        <img src="assets/logo.png" alt="" />
+        <span>NutriQuest</span>
+      </a>
+      <a href="#descargar" class="nav-cta">⬇ Descargar</a>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="top">
+    <div class="hero-glow tl" aria-hidden="true"></div>
+    <div class="hero-glow br" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <img src="assets/logo.png" alt="NutriQuest" class="hero-logo reveal" />
+      <span class="hero-eyebrow reveal">UAO · Nutrición Universitaria</span>
+      <h1 class="reveal">Come mejor. <span class="accent">Estudia mejor.</span></h1>
+      <p class="sub reveal">Sugerencias alimentarias personalizadas para universitarios. Swipe, evoluciona tu avatar, y construye hábitos que duran.</p>
+      <div class="hero-cta-row reveal">
+        <a href="#descargar" class="btn btn-white" data-scroll>⬇ Descargar App</a>
+        <a href="#descargar" class="btn btn-ghost" data-scroll>⬇ Descargar Juego AR</a>
+      </div>
+      <div class="note reveal">Solo para Android · Gratis</div>
+    </div>
+  </section>
+
+  <!-- ===================== CÓMO FUNCIONA ===================== -->
+  <section class="section features center" id="como">
+    <div class="container">
+      <div class="head-wrap reveal">
+        <span class="section-eyebrow">Cómo funciona</span>
+        <h2>Decide rápido. <span class="accent">Crece despacio.</span></h2>
+        <p class="section-lead">Una mecánica tan familiar como hacer swipe en una app de citas — pero esta vez por tu bienestar.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature reveal">
+          <span class="num">01</span>
+          <div class="ico">🃏</div>
+          <h3>Swipe de sugerencias</h3>
+          <p>Desliza derecha para aceptar, izquierda para descartar. Como Tinder, pero para comida saludable.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="num">02</span>
+          <div class="ico">🌱</div>
+          <h3>Avatar que evoluciona</h3>
+          <p>Cada decisión saludable hace crecer tu avatar — de Semilla a Árbol según tus hábitos.</p>
+        </article>
+        <article class="feature reveal">
+          <span class="num">03</span>
+          <div class="ico">🎯</div>
+          <h3>100% personalizado</h3>
+          <p>Aprende de tus preferencias, alergias y objetivos nutricionales para afinar cada sugerencia.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ROLES ===================== -->
+  <section class="section roles">
+    <div class="container">
+      <div class="reveal" style="max-width: 640px; margin-bottom: 56px;">
+        <span class="section-eyebrow">Roles</span>
+        <h2>Para toda la <span class="accent">comunidad UAO.</span></h2>
+        <p class="section-lead">Tres roles, una sola plataforma. Cada uno ve lo que necesita para hacer su parte.</p>
+      </div>
+
+      <div class="role-grid">
+        <article class="role reveal">
+          <div class="role-ico">🎓</div>
+          <h3>Estudiante <span class="tag">core</span></h3>
+          <p>Recibe sugerencias personalizadas, sigue tu progreso y cuida tu alimentación entre semestres.</p>
+        </article>
+        <article class="role reveal">
+          <div class="role-ico">🥼</div>
+          <h3>Nutricionista <span class="tag">expert</span></h3>
+          <p>Valida alimentos del catálogo, ajusta recomendaciones y supervisa el rigor del sistema.</p>
+        </article>
+        <article class="role reveal">
+          <div class="role-ico">👑</div>
+          <h3>Administrador <span class="tag">admin</span></h3>
+          <p>Gestiona usuarios, permisos y monitorea cómo evoluciona el uso de la plataforma.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DESCARGAR ===================== -->
+  <section class="section download center" id="descargar">
+    <div class="container">
+      <div class="head-wrap reveal">
+        <span class="section-eyebrow">Descarga</span>
+        <h2>Descarga <span class="accent">ahora.</span></h2>
+        <p class="section-lead">Instala ambas apps para la experiencia completa — la app principal y el juego de realidad aumentada.</p>
+      </div>
+
+      <div class="download-grid">
+        <article class="dl-card reveal">
+          <div class="icon-box">📱</div>
+          <h3>NutriQuest</h3>
+          <p class="desc">La app principal con sugerencias, historial, progreso y panel por roles.</p>
+          <div class="chips">
+            <span class="chip">Swipe</span>
+            <span class="chip">Avatar</span>
+            <span class="chip">Modo oscuro</span>
+            <span class="chip">Roles</span>
+          </div>
+          <div class="spacer"></div>
+          <a class="btn btn-white"
+             href="https://drive.google.com/uc?export=download&id=1llKGzDXZAbrCRA8HwdhTNY5WtdlMI8hx"
+             data-download="main"
+             rel="noopener">
+            <span>⬇ Descargar APK</span>
+          </a>
+          <div class="meta-line">apk · android · react native</div>
+        </article>
+
+        <article class="dl-card orange reveal">
+          <span class="badge">EXPERIENCIA AR</span>
+          <div class="icon-box">🎮</div>
+          <h3>NutriQuest AR</h3>
+          <p class="desc">Juego de realidad aumentada para preparar batidos saludables.</p>
+          <div class="chips">
+            <span class="chip orange-chip">AR</span>
+            <span class="chip orange-chip">Unity</span>
+            <span class="chip orange-chip">Interactivo</span>
+          </div>
+          <div class="spacer"></div>
+          <a class="btn btn-orange"
+             href="https://drive.google.com/uc?export=download&id=1FEIrg4BA9LjxC-fj2w5NhdVdngWEMLbC"
+             data-download="ar"
+             rel="noopener">
+            <span>⬇ Descargar Juego AR</span>
+          </a>
+          <div class="meta-line">apk · android · unity ar</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INSTALACIÓN ===================== -->
+  <section class="section install">
+    <div class="container">
+      <div class="reveal" style="max-width: 640px; margin-bottom: 48px;">
+        <span class="section-eyebrow">Instalación</span>
+        <h2>¿Cómo <span class="accent">instalar?</span></h2>
+        <p class="section-lead">Tres pasos rápidos. Demora menos que cargar el café de la cafetería.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="circle">01</div>
+          <div class="body">
+            <h4>Descarga los APKs</h4>
+            <p>Descarga ambos archivos APK en tu celular Android desde los enlaces arriba.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="circle">02</div>
+          <div class="body">
+            <h4>Permite la instalación</h4>
+            <p>Ve a Ajustes → Seguridad y activa <b style="color:var(--green-dark)">"Instalar apps desconocidas"</b>.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="circle">03</div>
+          <div class="body">
+            <h4>Instala en orden</h4>
+            <p>Instala primero <b style="color:var(--green-dark)">NutriQuest AR</b>, luego <b style="color:var(--green-dark)">NutriQuest</b>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reqs-row reveal">
+        <span class="req-chip"><span class="ico">📱</span> Android 7.0+</span>
+        <span class="req-chip"><span class="ico">📷</span> Cámara trasera</span>
+        <span class="req-chip"><span class="ico">💾</span> 200 MB libres</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="foot">
+    <img src="assets/logo.png" alt="NutriQuest" class="foot-logo" />
+    <div class="foot-brand">NutriQuest · 2026</div>
+    <p class="foot-warn">⚠️ Contenido educativo · No reemplaza consulta profesional.</p>
+    <div class="divider" aria-hidden="true"></div>
+    <p class="foot-uao">Universidad Autónoma de Occidente · Cali, Colombia</p>
+  </footer>
+
+  <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+(() => {
+  // ---------- Fade-in reveal ----------
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
+
+    // Group adjacent reveals so stagger looks deliberate per-section
+    reveals.forEach((el) => io.observe(el));
+
+    // Apply staggered delays per parent
+    const groups = new Map();
+    reveals.forEach((el) => {
+      const parent = el.closest('section') || el.parentElement;
+      if (!groups.has(parent)) groups.set(parent, []);
+      groups.get(parent).push(el);
+    });
+    groups.forEach((arr) => {
+      arr.forEach((el, i) => {
+        el.style.transitionDelay = `${Math.min(i, 6) * 70}ms`;
+      });
+    });
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  // ---------- Sticky Navbar after hero ----------
+  const navbar = document.getElementById('navbar');
+  const hero = document.querySelector('.hero');
+  const onScroll = () => {
+    const threshold = hero.getBoundingClientRect().bottom;
+    if (threshold < 80) {
+      navbar.classList.add('visible');
+    } else {
+      navbar.classList.remove('visible');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---------- Smooth scroll for [data-scroll] ----------
+  document.querySelectorAll('[data-scroll]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id && id.startsWith('#')) {
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+
+  // ---------- Toast ----------
+  const wrap = document.getElementById('toastWrap');
+  function showToast(text, pill) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    if (pill) {
+      const span = document.createElement('span');
+      span.className = 'pill';
+      span.textContent = pill;
+      t.appendChild(span);
+    }
+    const msg = document.createElement('span');
+    msg.textContent = text;
+    t.appendChild(msg);
+    wrap.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 400);
+    }, 2800);
+  }
+
+  // ---------- Download click handlers ----------
+  document.querySelectorAll('[data-download]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const kind = btn.getAttribute('data-download');
+      const pill = kind === 'ar' ? 'AR' : 'APP';
+      showToast('¡Descarga iniciada! 🎉', pill);
+    });
+  });
+})();
+</script>
+</body>
+</html>
